@@ -491,7 +491,7 @@
                         }
                 };
                 var json = JSON.stringify(obj);
-                xhr.open('PUT', 'https://dy7pvtbhg6.execute-api.us-east-1.amazonaws.com/prod/', true);
+                xhr.open('PUT', 'https://"API_id".execute-api.us-east-1.amazonaws.com/prod/', true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 console.log(json);
                 xhr.send(json);
