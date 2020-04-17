@@ -1,0 +1,186 @@
+@import url(sanitize.css);
+
+body{
+    background-color: #fbf8f8;
+    padding: 10px;
+    font-size: 24px;
+    color: #777;
+    font-family: "M PLUS Rounded 1c"; 
+}
+
+/*.container{
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+}
+
+.container header{
+    background-color: #422814;
+    padding: 10px;
+    font-family: "Nico Moji";
+    font-size: 54px;
+    text-align: center;
+    color: #fff;
+}
+
+/*.container h1{
+    margin: 0;
+    font-weight: normal;
+    text-align: center;
+}
+
+.container p{
+    margin: 10px;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+}*/
+
+.box1{
+    text-align: center;
+}
+
+.section2{
+    display: inline-block;
+    width: 450px;
+    /*margin: 20px 10px 0px 50px;*/
+}
+
+.section2 h2{
+    margin: 0;
+    text-align: left;
+    margin: 20px 10px 0px 50px;
+}
+
+.section2 input{
+    border-bottom: 1px silod #d1d1d1;
+    font-size: 1em;
+    width: 50%;
+    text-align: right;
+   /*padding: 8px;*/
+}
+
+.section2 p{
+    text-align: left;
+    font-size: 1em;
+    /*width: 600px;*/
+    margin: 20px 10px 0px 50px;
+}
+
+.section3{
+    display: inline-block;
+    text-align: left;
+    font-size: 1em;
+    width: 450px;
+    margin: 20px 10px 0px 50px;
+}
+
+.section3 label{
+    text-align: left;
+    font-size: 1em;
+    /*width: 600px;*/
+    /*margin: 20px 10px 0px 50px;*/
+}
+
+.section3 select{
+    border-bottom: 1px silod #d1d1d1;
+    font-size: 1em;
+    width: 20%;
+    padding: 0px;
+    text-align: center;
+}
+
+
+.section4{
+    display: inline-block;
+    text-align: left;
+    font-size: 1em;
+    width: 450px;
+    margin: 20px 10px 0px 50px;
+}
+
+.section4 label{
+    text-align: left;
+    font-size: 1em;
+    /*width: 600px;*/
+    /*margin: 20px 10px 0px 50px;*/
+}
+
+.section4 select{
+    border-bottom: 1px silod #d1d1d1;
+    font-size: 1em;
+    width: 40%;
+    padding: 0px;
+    text-align: center;
+}
+
+#submit {
+    /*display: block;*/
+    cursor: pointer;
+    font-size: 24px;
+    padding: 5px 5px;
+    width: 160px;
+    text-align: center;
+    background-color: dodgerblue;
+    color: white;
+    border: 1px solid #232323;
+}
+
+/*.section2 img{
+    text-align: left;
+    width: 490px;
+}
+
+.section2 ol{
+    float: right;
+    list-style: none;
+    text-align: left;
+    font-size: 20px;
+}*/
+
+@media only screen and (max-width:700px){
+
+    body{
+        
+        padding: 0px;
+        font-size: 14px;
+    }
+
+    .container{
+        margin: 0 auto;
+    }
+
+    .container header{
+        padding: 5px;
+        font-family: "Nico Moji";
+        font-size: 24px;
+    }
+
+    .section2{
+        display: inline;
+        margin: 20px 0 0 0;
+    }
+
+    .section2 h2{
+        text-align: center;
+        margin: 20px 0 0 0;
+    }
+
+    .section2 img{
+        text-align: center;
+        margin: 0 auto;
+        width: 300px;
+    }
+
+    .section2 ol{
+        float: none;
+        text-align: center;
+        font-size: 12px;
+        margin-right: 6%;
+    }
+
+    .section2 ol li{
+        display: inline-block;
+        margin: 5px;
+    }
+
+}

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>面取り加工　予定表示</title>
+
+    <link rel="stylesheet" href="../css/style3.css">
+</head>
+<body>
+ 
+    <form>
+        <p></p>
+        <input id="btn" type="button" value="面取り予定表示">
+        <input id="return" type="button" onclick="location.href='../index.html'" value="HOMEへ戻る">
+    </form>
+ 
+    <div class="box1">
+        <div class="section6">
+            <div class="section7">
+                <div id="result"></div>
+            </div>
+                
+            <div class="section7">
+                <div id="result2"></div>
+            </div>
+        </div>
+        
+        <div class="section6">
+            <div class="section7">
+                <div id="result3"></div>
+            </div>
+                
+            <div class="section7">
+                <div id="result4"></div>
+            </div>
+        </div>
+    
+        <div class="section6">
+            <div class="section7">
+                <div id="result5"></div>
+            </div>
+                
+            <div class="section7">
+                <div id="result6"></div>
+            </div>
+        </div>
+        <div class="section6">
+            <div class="section7">
+                <div id="result7"></div>
+            </div>
+                
+            <div class="section7">
+                <div id="result8"></div>
+            </div>
+        </div>
+        
+    </div>
+    <p></p>
+    <p></p>
+
+    <!--Lambdaで計算した生産終了時刻と入力情報をPlanのDBから呼び出して表示するscript-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            // 取得ボタンクリック時に実行される
+            document.getElementById('btn').addEventListener('click', function(){
+                var result = document.getElementById('result');
+                var xhr = new XMLHttpRequest();
+                // 非同期通信時の処理
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState === 4){ // 通信完了
+                        if (xhr.status === 200) { // 通信成功
+                            //var data = JSON.parse(xhr.responseText);
+                            var data = xhr.response;
+                            // 結果からキーにアクセス
+                            if (data === null) {
+                                // ない場合はメッセージ
+                                result.textContent = 'データが存在しません';
+                            } else {
+                                // 取得できた場合
+                                /*alert(typeof data);
+                                alert(data);
+                                alert(data.date);
+                                console.log(data.date)*/
+
+                                const item = data.body;
+                                /*alert(typeof item);
+                                alert(item);*/
+
+                                const items = JSON.parse(item);
+                                /*alert(items[0].date);
+                                alert(items[0].start_time_QA1);*/
+
+                                document.getElementById('result').insertAdjacentHTML('beforeend', '<h2>面取り工程　No.1</h2>')
+                                document.getElementById('result').insertAdjacentHTML('beforeend','<hr>')
+                                document.getElementById('result').insertAdjacentHTML('beforeend', '<p></p>');
+                                document.getElementById('result').insertAdjacentHTML('beforeend','<p>生産日: ' + items[0].date + '</p>' )
+                                document.getElementById('result').insertAdjacentHTML('beforeend','<p>生産機種: ' + items[0].prod_type + '</p>' )
+                                document.getElementById('result').insertAdjacentHTML('beforeend','<p>生産予定数: ' + items[0].prod_num + '</p>' )
+                                document.getElementById('result').insertAdjacentHTML('beforeend','<p>生産開始時刻: ' + items[0].start_time + '</p>' )
+                                document.getElementById('result').insertAdjacentHTML('beforeend','<p>終了予定時刻: ' + items[0].finish_time + '</p>' )
+                            }
+                        } else {
+                            result.textContent = 'サーバエラーが発生';
+                        }
+                    } else { // 通信中
+                        result.textContent = ''/*'通信中'*/
+                    };/*alert(xhr.readyState);*/
+                };
+                // 非同期通信を開始
+                xhr.responseType = 'json';
+                xhr.open('GET', 'https://j6unvb09f5.execute-api.us-east-1.amazonaws.com/prod/', true);
+                xhr.send();
+            }, false );
+        } ,false);
+    </script>
+
+    <!--Lambdaで計算した途中時刻の生産予定数量をOrderのDBから呼び出して表示するscript--->
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            // 取得ボタンクリック時に実行される
+            document.getElementById('btn').addEventListener('click', function(){
+                var result2 = document.getElementById('result2');
+                var xhr = new XMLHttpRequest();
+                // 非同期通信時の処理
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState === 4){ // 通信完了
+                        if (xhr.status === 200) { // 通信成功
+                            //var data = JSON.parse(xhr.responseText);
+                            var data = xhr.response;
+                            // 結果からキーにアクセス
+                            if (data === null) {
+                                // ない場合はメッセージ
+                                result2.textContent = 'データが存在しません';
+                            } else {
+                                // 取得できた場合
+                                //alert(typeof data);
+                                //alert(data);
+                                
+                                const item = data.body;
+                                //alert(typeof item);
+                                //alert(item);
+
+                                const items = JSON.parse(item);
+                                //alert(items[0].id);
+                                //alert(items[0].plan_QA1);
+
+                                document.getElementById('result2').insertAdjacentHTML('beforeend', '<p></p>');
+                                //document.getElementById('result2').insertAdjacentHTML('beforeend', '<h1>No.1 LINE QA</h1>')
+                                document.getElementById('result2').insertAdjacentHTML('beforeend', '<hr>');
+                                document.getElementById('result2').insertAdjacentHTML('beforeend', '<p>時刻　　　　生産予定</p>' );
+                                document.getElementById('result2').insertAdjacentHTML('beforeend', '<hr>');
+                                for (var i = 1;  i < items.length; i++){
+                                    //document.write('<p>生産日: ' + items.date + '</p>' )
+                                    for (var j = 0; j < items.length-1; j++){
+                                        if (items[j].id == i){
+                                            document.getElementById('result2').insertAdjacentHTML('beforeend', '<p>' + items[j].time + "　　　　" + items[j].plan + '個</p>' );
+                                            break; 
+                                        }
+                                    
+                                    }
+                                }
+                            }
+                        } else {
+                            result2.textContent = 'サーバエラーが発生';
+                        }
+                    } else { // 通信中
+                        result2.textContent = ''/*'通信中'*/
+                    }
+                };
+                // 非同期通信を開始
+                xhr.responseType = 'json';
+                xhr.open('GET', 'https://nsugs3v3x5.execute-api.us-east-1.amazonaws.com/prod/', true);
+                xhr.send();
+            }, false );
+        } ,false);
+    </script>
+
+    <!--Lambdaで計算した生産終了時刻と入力情報をPlanのDBから呼び出して表示するscript-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            // 取得ボタンクリック時に実行される
+            document.getElementById('btn').addEventListener('click', function(){
+                var result3 = document.getElementById('result3');
+                var xhr = new XMLHttpRequest();
+                // 非同期通信時の処理
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState === 4){ // 通信完了
+                        if (xhr.status === 200) { // 通信成功
+                            //var data = JSON.parse(xhr.responseText);
+                            var data = xhr.response;
+                            // 結果からキーにアクセス
+                            if (data === null) {
+                                // ない場合はメッセージ
+                                result3.textContent = 'データが存在しません';
+                            } else {
+                                // 取得できた場合
+                                /*alert(typeof data);
+                                alert(data);
+                                alert(data.date);
+                                console.log(data.date)*/
+
+                                const item = data.body;
+                                /*alert(typeof item);
+                                alert(item);*/
+
+                                const items = JSON.parse(item);
+                                /*alert(items[0].date);
+                                alert(items[0].start_time_QA1);*/
+
+                                document.getElementById('result3').insertAdjacentHTML('beforeend', '<h2>面取り工程　No.2</h2>')
+                                document.getElementById('result3').insertAdjacentHTML('beforeend','<hr>')
+                                document.getElementById('result3').insertAdjacentHTML('beforeend', '<p></p>');
+                                document.getElementById('result3').insertAdjacentHTML('beforeend','<p>生産日: ' + items[0].date + '</p>' )
+                                document.getElementById('result3').insertAdjacentHTML('beforeend','<p>生産機種: ' + items[0].prod_type + '</p>' )
+                                document.getElementById('result3').insertAdjacentHTML('beforeend','<p>生産予定数: ' + items[0].prod_num + '</p>' )
+                                document.getElementById('result3').insertAdjacentHTML('beforeend','<p>生産開始時刻: ' + items[0].start_time + '</p>' )
+                                document.getElementById('result3').insertAdjacentHTML('beforeend','<p>終了予定時刻: ' + items[0].finish_time + '</p>' )
+                            }
+                        } else {
+                            result3.textContent = 'サーバエラーが発生';
+                        }
+                    } else { // 通信中
+                        result3.textContent = ''/*'通信中'*/
+                    };/*alert(xhr.readyState);*/
+                };
+                // 非同期通信を開始
+                xhr.responseType = 'json';
+                xhr.open('GET', 'https://ss1vjgzpk9.execute-api.us-east-1.amazonaws.com/prod/', true);
+                xhr.send();
+            }, false );
+        } ,false);
+    </script>
+
+    <!--Lambdaで計算した途中時刻の生産予定数量をOrderのDBから呼び出して表示するscript--->
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            // 取得ボタンクリック時に実行される
+            document.getElementById('btn').addEventListener('click', function(){
+                var result4 = document.getElementById('result4');
+                var xhr = new XMLHttpRequest();
+                // 非同期通信時の処理
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState === 4){ // 通信完了
+                        if (xhr.status === 200) { // 通信成功
+                            //var data = JSON.parse(xhr.responseText);
+                            var data = xhr.response;
+                            // 結果からキーにアクセス
+                            if (data === null) {
+                                // ない場合はメッセージ
+                                result4.textContent = 'データが存在しません';
+                            } else {
+                                // 取得できた場合
+                                //alert(typeof data);
+                                //alert(data);
+                                
+                                const item = data.body;
+                                //alert(typeof item);
+                                //alert(item);
+
+                                const items = JSON.parse(item);
+                                //alert(items[0].id);
+                                //alert(items[0].plan_QA1);
+
+                                document.getElementById('result4').insertAdjacentHTML('beforeend', '<p></p>');
+                                //document.getElementById('result4').insertAdjacentHTML('beforeend', '<h1>No.1 LINE QA</h1>')
+                                document.getElementById('result4').insertAdjacentHTML('beforeend', '<hr>')
+                                document.getElementById('result4').insertAdjacentHTML('beforeend', '<p>時刻　　　　生産予定</p>' )
+                                document.getElementById('result4').insertAdjacentHTML('beforeend', '<hr>')
+                                for (var i = 1;  i < items.length; i++){
+                                    //document.write('<p>生産日: ' + items.date + '</p>' )
+                                    for (var j = 0; j < items.length-1; j++){
+                                        if (items[j].id == i){
+                                            document.getElementById('result4').insertAdjacentHTML('beforeend', '<p>' + items[j].time + "　　　　" + items[j].plan + '個</p>' );
+                                            break; 
+                                        }
+                                    
+                                    }
+                                }
+                            }
+                        } else {
+                            result4.textContent = 'サーバエラーが発生';
+                        }
+                    } else { // 通信中
+                        result4.textContent = ''/*'通信中'*/
+                    }
+                };
+                // 非同期通信を開始
+                xhr.responseType = 'json';
+                xhr.open('GET', 'https://o1ujyk7vj5.execute-api.us-east-1.amazonaws.com/prod/', true);
+                xhr.send();
+            }, false );
+        } ,false);
+    </script>
+
+    <!--Lambdaで計算した生産終了時刻と入力情報をPlanのDBから呼び出して表示するscript-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            // 取得ボタンクリック時に実行される
+            document.getElementById('btn').addEventListener('click', function(){
+                var result5 = document.getElementById('result5');
+                var xhr = new XMLHttpRequest();
+                // 非同期通信時の処理
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState === 4){ // 通信完了
+                        if (xhr.status === 200) { // 通信成功
+                            //var data = JSON.parse(xhr.responseText);
+                            var data = xhr.response;
+                            // 結果からキーにアクセス
+                            if (data === null) {
+                                // ない場合はメッセージ
+                                result5.textContent = 'データが存在しません';
+                            } else {
+                                // 取得できた場合
+                                /*alert(typeof data);
+                                alert(data);
+                                alert(data.date);
+                                console.log(data.date)*/
+
+                                const item = data.body;
+                                /*alert(typeof item);
+                                alert(item);*/
+
+                                const items = JSON.parse(item);
+                                /*alert(items[0].date);
+                                alert(items[0].start_time_QA1);*/
+
+                                document.getElementById('result5').insertAdjacentHTML('beforeend', '<h2>面取り工程　No.3</h2>')
+                                document.getElementById('result5').insertAdjacentHTML('beforeend','<hr>')
+                                document.getElementById('result5').insertAdjacentHTML('beforeend', '<p></p>');
+                                document.getElementById('result5').insertAdjacentHTML('beforeend','<p>生産日: ' + items[0].date + '</p>' )
+                                document.getElementById('result5').insertAdjacentHTML('beforeend','<p>生産機種: ' + items[0].prod_type + '</p>' )
+                                document.getElementById('result5').insertAdjacentHTML('beforeend','<p>生産予定数: ' + items[0].prod_num + '</p>' )
+                                document.getElementById('result5').insertAdjacentHTML('beforeend','<p>生産開始時刻: ' + items[0].start_time + '</p>' )
+                                document.getElementById('result5').insertAdjacentHTML('beforeend','<p>終了予定時刻: ' + items[0].finish_time + '</p>' )
+                            }
+                        } else {
+                            result5.textContent = 'サーバエラーが発生';
+                        }
+                    } else { // 通信中
+                        result5.textContent = ''/*'通信中'*/
+                    };/*alert(xhr.readyState);*/
+                };
+                // 非同期通信を開始
+                xhr.responseType = 'json';
+                xhr.open('GET', 'https://6d869ju0s3.execute-api.us-east-1.amazonaws.com/prod/', true);
+                xhr.send();
+            }, false );
+        } ,false);
+    </script>
+
+    <!--Lambdaで計算した途中時刻の生産予定数量をOrderのDBから呼び出して表示するscript--->
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            // 取得ボタンクリック時に実行される
+            document.getElementById('btn').addEventListener('click', function(){
+                var result6 = document.getElementById('result6');
+                var xhr = new XMLHttpRequest();
+                // 非同期通信時の処理
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState === 4){ // 通信完了
+                        if (xhr.status === 200) { // 通信成功
+                            //var data = JSON.parse(xhr.responseText);
+                            var data = xhr.response;
+                            // 結果からキーにアクセス
+                            if (data === null) {
+                                // ない場合はメッセージ
+                                result6.textContent = 'データが存在しません';
+                            } else {
+                                // 取得できた場合
+                                //alert(typeof data);
+                                //alert(data);
+                                
+                                const item = data.body;
+                                //alert(typeof item);
+                                //alert(item);
+
+                                const items = JSON.parse(item);
+                                //alert(items[0].id);
+                                //alert(items[0].plan_QA1);
+
+                                document.getElementById('result6').insertAdjacentHTML('beforeend', '<p></p>');
+                                //document.getElementById('result6').insertAdjacentHTML('beforeend', '<h1>No.1 LINE QA</h1>')
+                                document.getElementById('result6').insertAdjacentHTML('beforeend', '<hr>')
+                                document.getElementById('result6').insertAdjacentHTML('beforeend', '<p>時刻　　　　生産予定</p>' )
+                                document.getElementById('result6').insertAdjacentHTML('beforeend', '<hr>')
+                                for (var i = 1;  i < items.length; i++){
+                                    //document.write('<p>生産日: ' + items.date + '</p>' )
+                                    for (var j = 0; j < items.length-1; j++){
+                                        if (items[j].id == i){
+                                            document.getElementById('result6').insertAdjacentHTML('beforeend', '<p>' + items[j].time + "　　　　" + items[j].plan + '個</p>' );
+                                            break; 
+                                        }
+                                    
+                                    }
+                                }
+                            }
+                        } else {
+                            result6.textContent = 'サーバエラーが発生';
+                        }
+                    } else { // 通信中
+                        result6.textContent = ''/*'通信中'*/
+                    }
+                };
+                // 非同期通信を開始
+                xhr.responseType = 'json';
+                xhr.open('GET', 'https://91sk1doqa1.execute-api.us-east-1.amazonaws.com/prod/', true);
+                xhr.send();
+            }, false );
+        } ,false);
+    </script>
+
+    <!--Lambdaで計算した生産終了時刻と入力情報をPlanのDBから呼び出して表示するscript-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            // 取得ボタンクリック時に実行される
+            document.getElementById('btn').addEventListener('click', function(){
+                var result7 = document.getElementById('result7');
+                var xhr = new XMLHttpRequest();
+                // 非同期通信時の処理
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState === 4){ // 通信完了
+                        if (xhr.status === 200) { // 通信成功
+                            //var data = JSON.parse(xhr.responseText);
+                            var data = xhr.response;
+                            // 結果からキーにアクセス
+                            if (data === null) {
+                                // ない場合はメッセージ
+                                result7.textContent = 'データが存在しません';
+                            } else {
+                                // 取得できた場合
+                                /*alert(typeof data);
+                                alert(data);
+                                alert(data.date);
+                                console.log(data.date)*/
+
+                                const item = data.body;
+                                /*alert(typeof item);
+                                alert(item);*/
+
+                                const items = JSON.parse(item);
+                                /*alert(items[0].date);
+                                alert(items[0].start_time_QA1);*/
+
+                                document.getElementById('result7').insertAdjacentHTML('beforeend', '<h2>面取り工程　No.4</h2>')
+                                document.getElementById('result7').insertAdjacentHTML('beforeend','<hr>')
+                                document.getElementById('result7').insertAdjacentHTML('beforeend', '<p></p>');
+                                document.getElementById('result7').insertAdjacentHTML('beforeend','<p>生産日: ' + items[0].date + '</p>' )
+                                document.getElementById('result7').insertAdjacentHTML('beforeend','<p>生産機種: ' + items[0].prod_type + '</p>' )
+                                document.getElementById('result7').insertAdjacentHTML('beforeend','<p>生産予定数: ' + items[0].prod_num + '</p>' )
+                                document.getElementById('result7').insertAdjacentHTML('beforeend','<p>生産開始時刻: ' + items[0].start_time + '</p>' )
+                                document.getElementById('result7').insertAdjacentHTML('beforeend','<p>終了予定時刻: ' + items[0].finish_time + '</p>' )
+                            }
+                        } else {
+                            result7.textContent = 'サーバエラーが発生';
+                        }
+                    } else { // 通信中
+                        result7.textContent = ''/*'通信中'*/
+                    };/*alert(xhr.readyState);*/
+                };
+                // 非同期通信を開始
+                xhr.responseType = 'json';
+                xhr.open('GET', 'https://3bhlagoxk6.execute-api.us-east-1.amazonaws.com/prod/', true);
+                xhr.send();
+            }, false );
+        } ,false);
+    </script>
+
+    <!--Lambdaで計算した途中時刻の生産予定数量をOrderのDBから呼び出して表示するscript--->
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            // 取得ボタンクリック時に実行される
+            document.getElementById('btn').addEventListener('click', function(){
+                var result8 = document.getElementById('result8');
+                var xhr = new XMLHttpRequest();
+                // 非同期通信時の処理
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState === 4){ // 通信完了
+                        if (xhr.status === 200) { // 通信成功
+                            //var data = JSON.parse(xhr.responseText);
+                            var data = xhr.response;
+                            // 結果からキーにアクセス
+                            if (data === null) {
+                                // ない場合はメッセージ
+                                result8.textContent = 'データが存在しません';
+                            } else {
+                                // 取得できた場合
+                                //alert(typeof data);
+                                //alert(data);
+                                
+                                const item = data.body;
+                                //alert(typeof item);
+                                //alert(item);
+
+                                const items = JSON.parse(item);
+                                //alert(items[0].id);
+                                //alert(items[0].plan_QA1);
+
+                                document.getElementById('result8').insertAdjacentHTML('beforeend', '<p></p>');
+                                //document.getElementById('result8').insertAdjacentHTML('beforeend', '<h1>No.1 LINE QA</h1>')
+                                document.getElementById('result8').insertAdjacentHTML('beforeend', '<hr>')
+                                document.getElementById('result8').insertAdjacentHTML('beforeend', '<p>時刻　　　　生産予定</p>' )
+                                document.getElementById('result8').insertAdjacentHTML('beforeend', '<hr>')
+                                for (var i = 1;  i < items.length; i++){
+                                    //document.write('<p>生産日: ' + items.date + '</p>' )
+                                    for (var j = 0; j < items.length-1; j++){
+                                        if (items[j].id == i){
+                                            document.getElementById('result8').insertAdjacentHTML('beforeend', '<p>' + items[j].time + "　　　　" + items[j].plan + '個</p>' );
+                                            break; 
+                                        }
+                                    
+                                    }
+                                }
+                            }
+                        } else {
+                            result8.textContent = 'サーバエラーが発生';
+                        }
+                    } else { // 通信中
+                        result8.textContent = ''/*'通信中'*/
+                    }
+                };
+                // 非同期通信を開始
+                xhr.responseType = 'json';
+                xhr.open('GET', 'https://suseud101k.execute-api.us-east-1.amazonaws.com/prod/', true);
+                xhr.send();
+            }, false );
+        } ,false);
+    </script>
+
+</body>
+</html>

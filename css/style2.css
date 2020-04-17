@@ -1,0 +1,50 @@
+body{
+    background-color: #e2edee;
+    padding: 30px;*
+    color: #777;
+    font-family: "M PLUS Rounded 1c"; 
+}
+
+header{
+    margin-top: 30px;/*上余白30px*/
+    color: #2E99A9;
+}
+
+h1{
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+}
+
+hr{
+    border-width: 3px;/*太さ3px*/
+    border-color: #2E99A9;
+    margin: 30px 0;/*上下余白30px*/
+}
+
+.container{
+    margin: 0 auto;
+    padding: 10px;
+    width: 720px;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+}
+
+/*.container a{
+    width: 1080px;
+    text-align: left;
+}*/
+
+.container ol{
+    margin: 30px 15px;
+    /*float: right;*/
+    font-size: 24px;
+    /*vertical-align: middle;*/
+    list-style: none;
+    text-align: left;
+}
+
+.container ol.items li{
+    margin-left: 120px;
+    margin-bottom: 10px;
+}
