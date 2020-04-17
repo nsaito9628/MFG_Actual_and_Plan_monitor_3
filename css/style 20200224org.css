@@ -1,0 +1,102 @@
+@import url(sanitize.css);
+
+body{
+    background-color: #f0f0f0;
+    padding: 10px;
+    font-size: 24px;
+    color: #777;
+    font-family: "M PLUS Rounded 1c"; 
+}
+
+.container{
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+}
+
+.container header{
+    background-color: #422814;
+    padding: 10px;
+    font-family: "Nico Moji";
+    font-size: 54px;
+    text-align: center;
+    color: #fff;
+}
+
+.container h1{
+    margin: 0;
+    /*padding: 0;*/
+    /*font-size: 36px;*/
+    font-weight: normal;
+    text-align: center;
+    /*vertical-align: middle;*/
+}
+
+.box1{
+	text-align: center;
+}
+
+.section2{
+    display: inline-block;
+    width: 600px;
+    margin: 20px 10px 0px 50px;
+}
+
+.section2 h2{
+    margin: 0;
+    text-align: left;
+}
+
+.section2 img{
+    text-align: left;
+    width: 420px;
+}
+
+.section2 ol{
+    float: right;
+    /*vertical-align: middle;*/
+    list-style: none;
+    text-align: left;
+    font-size: 20px;
+}
+
+@media only screen and (max-width:700px){
+
+    body{
+        padding: 0px;
+        font-size: 14px;
+    }
+
+    .container{
+        margin: 0 auto;
+    }
+
+    .container header{
+        padding: 5px;
+        font-family: "Nico Moji";
+        font-size: 24px;
+    }
+
+    .section2{
+        display: inline;
+        margin: 20px 0 0 0;
+    }
+
+    .section2 h2{
+        text-align: center;
+        margin: 20px 0 0 0;
+    }
+
+    .section2 img{
+        text-align: center;
+        margin: 0 auto;
+        width: 300px;
+    }
+
+    .section2 ol{
+        float: none;
+        text-align: center;
+        font-size: 12px;
+        margin: 0 auto;
+        margin-right: 6%;
+    }
+}
