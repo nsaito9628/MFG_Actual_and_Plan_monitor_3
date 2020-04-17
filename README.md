@@ -1,0 +1,2 @@
+# MFG_Actual_and_Plan_monitor_3
+工場の生産予実をaws cloudwatchダッシュボードで表示するための不稼働項目を入力・管理する仕組み(簡易入力版)
